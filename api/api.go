@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	m "github.com/gmancoelho/transacoes-go/models"
+	s "github.com/gmancoelho/transacoes-go/repository"
 	"github.com/gorilla/mux"
 )
 
@@ -13,6 +14,7 @@ type apiFunc func(w http.ResponseWriter, r *http.Request) error
 
 type APIServer struct {
 	address string
+	storage s.Storage
 }
 
 func writeJSON(w http.ResponseWriter, statusCode int, response interface{}) error {
@@ -33,9 +35,10 @@ func makeHTTPHandlerFunc(fn apiFunc) http.HandlerFunc {
 	}
 }
 
-func NewAPIServer(add string) *APIServer {
+func NewAPIServer(add string, storage s.Storage) *APIServer {
 	return &APIServer{
 		address: add,
+		storage: storage,
 	}
 }
 
@@ -59,7 +62,8 @@ func (s *APIServer) setupRouter() *mux.Router {
 
 	router.Use(LoggingMiddleware)
 
-	router.HandleFunc("/transacoes", makeHTTPHandlerFunc(s.handleTransactions)).Methods(http.MethodPost)
+	router.HandleFunc("/transacao", makeHTTPHandlerFunc(s.handleTransaction))
+	router.HandleFunc("/estatistica", makeHTTPHandlerFunc(s.handleTransaction))
 
 	return router
 }
