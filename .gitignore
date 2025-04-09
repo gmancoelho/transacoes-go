@@ -1,37 +1,37 @@
-# Binaries
-/bin/
-/*.exe
-/*.dll
-/*.so
-/*.dylib
+# Binaries for programs and plugins
+*.exe
+*.dll
+*.so
+*.dylib
 
-# Coverage files
-coverage.out
-coverage.html
+# Output of build tools
+bin/
+build/
 
-# Logs
-*.log
+# Dependency directories (vendor/)
+vendor/
 
-# Dependency directories
-/vendor/
+# Go test binary
+*.test
 
 # IDE and editor files
 .vscode/
 .idea/
 *.swp
+*.swo
+
+# Logs and temporary files
+*.log
+*.tmp
+*.out
 
 # OS-specific files
 .DS_Store
 Thumbs.db
 
-# Go build artifacts
-*.test
-*.out
-
-# Go module files (if using vendoring, remove /vendor/ above)
+# Go modules
 go.sum
+go.mod
 
-# Temporary files
-*.tmp
-*.bak
-*.old
+# Coverage files
+coverage.out
