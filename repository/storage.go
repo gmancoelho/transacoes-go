@@ -1,8 +1,11 @@
 package storage
 
-type Storage struct {
-}
+import (
+	e "github.com/gmancoelho/transacoes-go/entities"
+)
 
-func NewStorage() Storage {
-	return Storage{}
+type Storage interface {
+	CreateTransaction(*e.Transactions) error
+	DeleteTransaction(int) error
+	GetTransactions() ([]*e.Transactions, error)
 }
