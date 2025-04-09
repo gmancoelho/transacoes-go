@@ -12,7 +12,7 @@ const address = ":8080"
 func main() {
 	fmt.Printf("Start Transactions Server \n")
 
-	store := s.NewStorage()
+	store := s.NewLocalStorage()
 
 	server := api.NewAPIServer(address, store)
 
