@@ -6,6 +6,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/gorilla/mux"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -31,7 +32,8 @@ func TestHandleTransaction(t *testing.T) {
 
 	t.Run("Given a valid DELETE request to /transaction", func(t *testing.T) {
 		// Arrange
-		req := httptest.NewRequest(http.MethodDelete, "/transaction", nil)
+		req := httptest.NewRequest(http.MethodDelete, "/transaction/2", nil)
+		req = mux.SetURLVars(req, map[string]string{"id": "2"}) // Set the URL variable "id"
 		w := httptest.NewRecorder()
 
 		// Act
@@ -39,7 +41,7 @@ func TestHandleTransaction(t *testing.T) {
 
 		// Assert
 		assert.NoError(t, err, "unexpected error occurred")
-		assert.Equal(t, http.StatusOK, w.Code, "expected status code 200")
+		assert.Equal(t, http.StatusNoContent, w.Code, "expected status code 204")
 	})
 
 	t.Run("Given an invalid method PUT for /transaction", func(t *testing.T) {
