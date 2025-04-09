@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	m "github.com/gmancoelho/transacoes-go/models"
+	m "github.com/gmancoelho/transacoes-go/entities"
 	s "github.com/gmancoelho/transacoes-go/repository"
 	"github.com/gorilla/mux"
 )

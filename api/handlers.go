@@ -1,10 +1,11 @@
 package api
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 
-	m "github.com/gmancoelho/transacoes-go/models"
+	m "github.com/gmancoelho/transacoes-go/entities"
 )
 
 func (s *APIServer) handleTransaction(w http.ResponseWriter, r *http.Request) error {
@@ -32,7 +33,20 @@ func (s *APIServer) handleGetStatistics(w http.ResponseWriter, r *http.Request) 
 }
 
 func (s *APIServer) handleCreateTrasaction(w http.ResponseWriter, r *http.Request) error {
-	return nil
+	defer r.Body.Close()
+
+	tranRequest := new(m.Transactions)
+	if err := json.NewDecoder(r.Body).Decode(tranRequest); err != nil {
+		return handleError(w, fmt.Errorf("invalid request payload"), http.StatusBadRequest)
+	}
+
+	if tranRequest.DateHour == "" {
+		return handleError(w, fmt.Errorf("Date cannot be nil"), http.StatusBadRequest)
+	}
+
+	account := m.NewTransaction(tranRequest.Value, tranRequest.DateHour)
+
+	return writeJSON(w, http.StatusCreated, account)
 }
 
 func (s *APIServer) handleDeleteAccount(w http.ResponseWriter, r *http.Request) error {
