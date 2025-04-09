@@ -41,7 +41,7 @@ func (s *APIServer) handleCreateTrasaction(w http.ResponseWriter, r *http.Reques
 	}
 
 	if tranRequest.DateHour == "" {
-		return handleError(w, fmt.Errorf("Date cannot be nil"), http.StatusBadRequest)
+		return handleError(w, fmt.Errorf("date cannot be nil"), http.StatusBadRequest)
 	}
 
 	account := m.NewTransaction(tranRequest.Value, tranRequest.DateHour)
